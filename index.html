@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>AI替代我了吗？- 测测你还能苟多久</title>
+<meta name="description" content="10道灵魂拷问，测测你被AI替代的概率。结果可能引起极度不适。">
+<meta property="og:title" content="AI替代我了吗？">
+<meta property="og:description" content="10道灵魂拷问，测测你被AI替代的概率。结果可能引起极度不适。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630' fill='%23f5f0ff'%3E%3Crect width='1200' height='630'/%3E%3Ctext x='600' y='280' text-anchor='middle' fill='%239b7be8' font-size='80' font-family='sans-serif'%3EAI替代我了吗？%3C/text%3E%3Ctext x='600' y='380' text-anchor='middle' fill='%23aaa' font-size='40' font-family='sans-serif'%3E测测你还能苟多久%3C/text%3E%3C/svg%3E">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #f5f0ff;
+  color: #3d3d5c;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.app {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+}
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 24px 20px;
+  animation: fadeIn 0.4s ease;
+}
+.screen.active { display: flex; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes scanLine {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ===== Screen 1: Landing ===== */
+.landing {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  background: linear-gradient(180deg, #f5f0ff 0%, #ede4ff 100%);
+}
+.landing-icon {
+  font-size: 72px;
+  animation: float 3s ease-in-out infinite;
+  margin-bottom: 8px;
+}
+.landing h1 {
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #9b7be8, #e88bc3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.3;
+}
+.landing .subtitle {
+  font-size: 18px;
+  color: #9a8fad;
+  margin-bottom: 24px;
+}
+.landing .warning {
+  font-size: 13px;
+  color: #d47fa6;
+  padding: 10px 16px;
+  border: 1px solid rgba(212,127,166,0.25);
+  border-radius: 12px;
+  background: rgba(212,127,166,0.06);
+  margin-bottom: 32px;
+}
+.btn-start {
+  background: linear-gradient(135deg, #9b7be8, #e88bc3);
+  color: #fff;
+  border: none;
+  padding: 16px 48px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(155,123,232,0.3);
+}
+.btn-start:active {
+  transform: scale(0.96);
+}
+.btn-start:hover {
+  box-shadow: 0 6px 30px rgba(155,123,232,0.45);
+  transform: scale(1.03);
+}
+.landing-footer {
+  margin-top: 48px;
+  font-size: 12px;
+  color: #b8aec8;
+}
+
+/* ===== Screen 2: Quiz ===== */
+.quiz {
+  justify-content: flex-start;
+  gap: 20px;
+  background: linear-gradient(180deg, #f5f0ff 0%, #fdf0f5 100%);
+}
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e8e0f5;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #9b7be8, #e88bc3);
+  transition: width 0.4s ease;
+  border-radius: 3px;
+}
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #9a8fad;
+}
+.quiz-number {
+  font-weight: 700;
+  color: #9b7be8;
+  font-size: 16px;
+}
+.question-text {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #3d3d5c;
+  margin: 8px 0;
+  animation: slideIn 0.35s ease;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideIn 0.35s ease;
+}
+.option {
+  background: #fff;
+  border: 2px solid #ede4ff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  font-size: 15px;
+  color: #5c5c7a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  -webkit-user-select: none;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(155,123,232,0.06);
+}
+.option:active {
+  transform: scale(0.98);
+}
+.option:hover {
+  border-color: #c4b0f0;
+  background: #faf7ff;
+  color: #3d3d5c;
+}
+.option.selected {
+  border-color: #9b7be8;
+  background: linear-gradient(135deg, rgba(155,123,232,0.08), rgba(232,139,195,0.08));
+  color: #7b5fd4;
+  font-weight: 600;
+}
+.option-label {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 2px solid #e0d6f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  color: #b8aec8;
+  background: #f9f5ff;
+}
+.option.selected .option-label {
+  border-color: #9b7be8;
+  background: linear-gradient(135deg, #9b7be8, #e88bc3);
+  color: #fff;
+}
+
+/* ===== Screen 3: Loading ===== */
+.loading {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+  background: linear-gradient(180deg, #f5f0ff 0%, #fdf0f5 100%);
+}
+.scan-box {
+  width: 180px;
+  height: 180px;
+  border: 2.5px solid #c4b0f0;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(155,123,232,0.1);
+}
+.scan-box::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #9b7be8, #e88bc3, transparent);
+  animation: scanLine 1.5s ease-in-out infinite;
+}
+.scan-emoji {
+  font-size: 72px;
+  animation: pulse 2s infinite;
+}
+.loading-text {
+  font-size: 16px;
+  color: #9b7be8;
+  min-height: 48px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ===== Screen 4: Result ===== */
+.result {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+  background: linear-gradient(180deg, #f5f0ff 0%, #fdf0f5 100%);
+}
+.result-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 24px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(155,123,232,0.1);
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--result-gradient, linear-gradient(90deg, #9b7be8, #e88bc3));
+}
+.result-title {
+  font-size: 13px;
+  color: #b8aec8;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+.ring-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 20px;
+}
+.ring-container svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.ring-bg {
+  fill: none;
+  stroke: #ede4ff;
+  stroke-width: 10;
+}
+.ring-progress {
+  fill: none;
+  stroke: var(--result-color, #9b7be8);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 565;
+  stroke-dashoffset: 565;
+  transition: stroke-dashoffset 1.5s ease;
+}
+.ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.ring-percent {
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--result-color);
+  line-height: 1;
+}
+.ring-percent-sign {
+  font-size: 20px;
+  color: var(--result-color);
+  opacity: 0.7;
+}
+.ring-label-small {
+  font-size: 12px;
+  color: #b8aec8;
+  margin-top: 4px;
+}
+.result-badge {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 8px 0 4px;
+  color: var(--result-color);
+}
+.result-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #6b6b8a;
+  text-align: left;
+  margin: 12px 0;
+  padding: 16px;
+  background: var(--result-bg, #f9f5ff);
+  border-radius: 14px;
+  border-left: 3px solid var(--result-color);
+}
+.result-share-hint {
+  font-size: 12px;
+  color: #b8aec8;
+  margin-top: 8px;
+  padding: 8px 0;
+}
+.result-watermark {
+  font-size: 11px;
+  color: #d0c8e0;
+  margin-top: 12px;
+}
+.btn-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+.btn-retry {
+  flex: 1;
+  background: #fff;
+  border: 2px solid #e0d6f0;
+  color: #9b7be8;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-retry:hover { border-color: #9b7be8; background: #faf7ff; }
+.btn-retry:active { transform: scale(0.96); }
+.btn-save {
+  flex: 1;
+  background: linear-gradient(135deg, #9b7be8, #e88bc3);
+  border: none;
+  color: #fff;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(155,123,232,0.25);
+}
+.btn-save:hover { box-shadow: 0 6px 24px rgba(155,123,232,0.4); }
+.btn-save:active { transform: scale(0.96); }
+
+/* Canvas hidden for screenshot */
+#shareCanvas { display: none; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #fff;
+  border: 1.5px solid #c4b0f0;
+  color: #9b7be8;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(155,123,232,0.15);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Screen 1: Landing -->
+  <div class="screen landing active" id="screenLanding">
+    <div class="landing-icon">🤖</div>
+    <h1>AI替代我了吗？</h1>
+    <p class="subtitle">测测你还能苟多久</p>
+    <p class="warning">⚠️ 测试结果可能引起极度焦虑，请在心理承受范围内答题</p>
+    <button class="btn-start" onclick="startQuiz()">开始测试</button>
+    <p class="landing-footer">已有 <span id="fakeCount">1,283,847</span> 人测过 · 纯属娱乐</p>
+  </div>
+
+  <!-- Screen 2: Quiz -->
+  <div class="screen quiz" id="screenQuiz">
+    <div>
+      <div class="quiz-header">
+        <span class="quiz-number" id="qNum">1/10</span>
+        <span id="qHint">选一个最符合的</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <p class="question-text" id="qText"></p>
+    <div class="options" id="optionsContainer"></div>
+  </div>
+
+  <!-- Screen 3: Loading -->
+  <div class="screen loading" id="screenLoading">
+    <div class="scan-box">
+      <div class="scan-emoji">🧠</div>
+    </div>
+    <p class="loading-text" id="loadingText"></p>
+  </div>
+
+  <!-- Screen 4: Result -->
+  <div class="screen result" id="screenResult">
+    <div class="result-card" id="resultCard">
+      <p class="result-title">▎ AI 替 代 指 数 报 告 ▎</p>
+      <div class="ring-container">
+        <svg viewBox="0 0 200 200">
+          <circle class="ring-bg" cx="100" cy="100" r="90"/>
+          <circle class="ring-progress" id="ringProgress" cx="100" cy="100" r="90"/>
+        </svg>
+        <div class="ring-text">
+          <div class="ring-percent" id="ringPercent">0<span class="ring-percent-sign">%</span></div>
+          <div class="ring-label-small">被替代概率</div>
+        </div>
+      </div>
+      <div class="result-badge" id="resultBadge"></div>
+      <div class="result-desc" id="resultDesc"></div>
+      <p class="result-share-hint">📱 长按截图分享给同事，让他们也焦虑一下</p>
+      <p class="result-watermark">AI替代我了吗 · ai-replaced.me</p>
+    </div>
+    <div class="btn-actions">
+      <button class="btn-retry" onclick="restart()">🔄 再测一次</button>
+      <button class="btn-save" onclick="saveImage()">💾 保存图片</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="shareCanvas"></canvas>
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== Quiz Data =====
+const questions = [
+  {
+    q: "你的日常工作主要是？",
+    opts: [
+      { text: "安抚甲方/客户的情绪", score: 1 },
+      { text: "做PPT写汇报材料", score: 3 },
+      { text: "写代码/做表格/出图", score: 4 },
+      { text: "发呆、开会、传达精神", score: 2 },
+    ]
+  },
+  {
+    q: "你最核心的职场技能是？",
+    opts: [
+      { text: "读懂领导的微表情", score: 1 },
+      { text: "把简单的事情说复杂", score: 2 },
+      { text: "Excel / 数据分析", score: 4 },
+      { text: "画图写文案做设计", score: 3 },
+    ]
+  },
+  {
+    q: "同事需要你，通常是因为？",
+    opts: [
+      { text: "修电脑、修打印机、连投影", score: 3 },
+      { text: "知道方圆三公里哪家外卖好吃", score: 1 },
+      { text: "帮忙干脏活累活背锅", score: 2 },
+      { text: "精神支柱 / 团队气氛组", score: 1 },
+    ]
+  },
+  {
+    q: "AI工具你用得怎么样？",
+    opts: [
+      { text: "已经靠AI干完大部分活了", score: 4 },
+      { text: "偶尔用ChatGPT查点东西", score: 3 },
+      { text: "用过，觉得AI是智障", score: 2 },
+      { text: "AI是什么？能吃吗？", score: 1 },
+    ]
+  },
+  {
+    q: "如果公司裁员，你觉得自己…",
+    opts: [
+      { text: "第一批，简历都不用更新", score: 4 },
+      { text: "中间偏危险，瑟瑟发抖", score: 3 },
+      { text: "应该还好吧…吧？", score: 2 },
+      { text: "裁我？公司不敢", score: 1 },
+    ]
+  },
+  {
+    q: "你加班通常是因为？",
+    opts: [
+      { text: "领导没走，我不敢走", score: 2 },
+      { text: "活是真的多到做不完", score: 3 },
+      { text: "白天摸鱼了，晚上补", score: 4 },
+      { text: "从不加班，到点就走", score: 1 },
+    ]
+  },
+  {
+    q: "你的工作成果，AI能几分钟复制？",
+    opts: [
+      { text: "30秒，甚至做得更好", score: 4 },
+      { text: "能做七八成差不多", score: 3 },
+      { text: "能做但效果拉胯", score: 2 },
+      { text: "做梦都做不出来", score: 1 },
+    ]
+  },
+  {
+    q: "你最近一次被领导夸是因为？",
+    opts: [
+      { text: "方案/交付确实做得好", score: 2 },
+      { text: "人nice好说话不挑活", score: 1 },
+      { text: "执行力强使命必达", score: 2 },
+      { text: "上次被夸是什么时候…？", score: 4 },
+    ]
+  },
+  {
+    q: "你觉得自己最不可替代的是？",
+    opts: [
+      { text: "能喝酒，会敬酒，敢挡酒", score: 1 },
+      { text: "甲方骂我我还能笑着说好的", score: 2 },
+      { text: "能加班到凌晨三点还发朋友圈", score: 3 },
+      { text: "工位风水好 / 吉祥物属性", score: 1 },
+    ]
+  },
+  {
+    q: "面对AI崛起，你的态度是？",
+    opts: [
+      { text: "拥抱变化，已在学prompt", score: 3 },
+      { text: "很焦虑，但继续刷手机", score: 4 },
+      { text: "无所谓，船到桥头自然直", score: 2 },
+      { text: "准备转行卖烤红薯了", score: 1 },
+    ]
+  }
+];
+
+// Macaron palette for each result tier
+const results = [
+  { min: 10, max: 14, label: "🛡️ 铁饭碗の守护者", color: "#e8a84c", bg: "#fef8ee",
+    desc: "恭喜你掌握了AI永远学不会的核心技能：溜须拍马、精准甩锅、以及在领导面前表演加班。你不是不可替代，你是没人想替代。安全指数：跟蟑螂一样，核战后你还在。" },
+  { min: 15, max: 19, label: "🧠 高精尖AI学习对象", color: "#4db8a4", bg: "#eef9f6",
+    desc: "AI正在通宵学习你的能力，但智商不够用。你的存在让OpenAI的工程师感到绝望——'为什么这个人类能做到这种事？'建议：继续摸鱼，主动拉大与AI的差距，让它永远追不上。" },
+  { min: 20, max: 24, label: "🤝 人机共存体", color: "#7b8fe8", bg: "#f0f2ff",
+    desc: "你和AI五五开。好消息是你会上厕所它不会，暂时领先。坏消息是下次绩效考核可能是你和GPT二选一，而GPT不要五险一金。生存建议：开始讨好你的直属领导。" },
+  { min: 25, max: 29, label: "📦 优质AI耗材", color: "#e8994c", bg: "#fef5ee",
+    desc: "你的大部分技能AI用0.3秒就能复制，且不会抱怨996。你目前存在的唯一价值是：公司还没来得及部署AI。建议：立刻开始研究副业，摆摊卖煎饼的选址攻略了解一下？" },
+  { min: 30, max: 34, label: "🗑️ 劣质AI耗材", color: "#e86b6b", bg: "#fef0f0",
+    desc: "坏消息：AI做你的工作又快又好还不要工资。更坏的消息：你的领导已经知道了。你唯一的护城河是会帮领导取快递。生存建议：研习桥洞防噪技能、流浪猫驯化术、以及如何用纸箱搭建抗风结构。" },
+  { min: 35, max: 40, label: "☠️ 电子废物预备役", color: "#d4507a", bg: "#fdf0f4",
+    desc: "此刻，一个GPT-5正在面试你的岗位，工资只要你的1%，还主动申请007。你的简历已被HR标记为'不如AI'。末日生存指南：①学会烤红薯（选对品种很重要）②研究哪个桥洞朝南且有WiFi ③储备3年泡面 ④别慌，你还可以去给AI贴标签，时薪2块。" },
+];
+
+const loadingMessages = [
+  "正在扫描你的职业技能树...",
+  "正在对比 GPT-5 的能力矩阵...",
+  "正在计算你的工位存活概率...",
+  "正在评估你的不可替代指数...",
+  "正在生成你的AI替代报告...",
+  "报告生成完毕，结果有点扎心..."
+];
+
+// ===== State =====
+let currentQ = 0;
+let scores = [];
+
+// ===== Fake count =====
+(function() {
+  const base = 1283847;
+  const el = document.getElementById('fakeCount');
+  const extra = Math.floor(Math.random() * 50000);
+  el.textContent = (base + extra).toLocaleString();
+})();
+
+// ===== Screen Management =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ===== Quiz Logic =====
+function startQuiz() {
+  currentQ = 0;
+  scores = [];
+  showScreen('screenQuiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('qNum').textContent = `${currentQ + 1}/10`;
+  document.getElementById('progressFill').style.width = `${(currentQ / 10) * 100}%`;
+  document.getElementById('qText').textContent = q.q;
+
+  const labels = ['A', 'B', 'C', 'D'];
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = q.opts.map((opt, i) => `
+    <div class="option" onclick="selectOption(${i}, ${opt.score})">
+      <div class="option-label">${labels[i]}</div>
+      <span>${opt.text}</span>
+    </div>
+  `).join('');
+
+  // Re-trigger animation
+  const qText = document.getElementById('qText');
+  qText.style.animation = 'none';
+  container.style.animation = 'none';
+  requestAnimationFrame(() => {
+    qText.style.animation = '';
+    container.style.animation = '';
+  });
+}
+
+function selectOption(idx, score) {
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(o => o.classList.remove('selected'));
+  opts[idx].classList.add('selected');
+
+  scores.push(score);
+
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < questions.length) {
+      renderQuestion();
+    } else {
+      showLoading();
+    }
+  }, 350);
+}
+
+// ===== Loading Animation =====
+function showLoading() {
+  showScreen('screenLoading');
+  const el = document.getElementById('loadingText');
+  let msgIdx = 0;
+
+  function typeMessage(text, cb) {
+    el.textContent = '';
+    let i = 0;
+    const timer = setInterval(() => {
+      el.textContent = text.substring(0, i + 1);
+      i++;
+      if (i >= text.length) {
+        clearInterval(timer);
+        setTimeout(cb, 400);
+      }
+    }, 50);
+  }
+
+  function nextMsg() {
+    if (msgIdx < loadingMessages.length) {
+      typeMessage(loadingMessages[msgIdx], () => {
+        msgIdx++;
+        nextMsg();
+      });
+    } else {
+      showResult();
+    }
+  }
+  nextMsg();
+}
+
+// ===== Result =====
+function getResult(totalScore) {
+  for (const r of results) {
+    if (totalScore >= r.min && totalScore <= r.max) return r;
+  }
+  return results[results.length - 1];
+}
+
+function showResult() {
+  const totalScore = scores.reduce((a, b) => a + b, 0);
+  const percent = Math.round((totalScore - 10) / 30 * 100);
+  const r = getResult(totalScore);
+
+  const card = document.getElementById('resultCard');
+  card.style.setProperty('--result-color', r.color);
+  card.style.setProperty('--result-bg', r.bg);
+  card.style.setProperty('--result-gradient', `linear-gradient(90deg, ${r.color}, ${r.color}88)`);
+  document.getElementById('resultBadge').textContent = r.label;
+  document.getElementById('resultDesc').textContent = r.desc;
+
+  showScreen('screenResult');
+
+  // Animate ring
+  const circumference = 2 * Math.PI * 90;
+  const offset = circumference - (percent / 100) * circumference;
+  const ring = document.getElementById('ringProgress');
+  ring.style.stroke = r.color;
+  ring.style.filter = 'none';
+  requestAnimationFrame(() => {
+    ring.style.strokeDashoffset = offset;
+  });
+
+  // Animate percent number
+  const percentEl = document.getElementById('ringPercent');
+  animateNumber(percentEl, 0, percent, 1500, r.color);
+}
+
+function animateNumber(el, from, to, duration, color) {
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(from + (to - from) * eased);
+    el.innerHTML = `${current}<span class="ring-percent-sign" style="color:${color}">%</span>`;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+function restart() {
+  document.getElementById('ringProgress').style.strokeDashoffset = 565;
+  showScreen('screenLanding');
+}
+
+// ===== Save as Image (Canvas) =====
+function saveImage() {
+  const canvas = document.getElementById('shareCanvas');
+  const dpr = 2;
+  const W = 375 * dpr;
+  const H = 667 * dpr;
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const w = 375, h = 667;
+
+  const totalScore = scores.reduce((a, b) => a + b, 0);
+  const percent = Math.round((totalScore - 10) / 30 * 100);
+  const r = getResult(totalScore);
+
+  // Background - soft white
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  roundRect(ctx, 0, 0, w, h, 20);
+  ctx.fill();
+
+  // Top gradient accent
+  const grad = ctx.createLinearGradient(0, 0, w, 0);
+  grad.addColorStop(0, r.color);
+  grad.addColorStop(1, r.color + '66');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, 5);
+
+  // Title
+  ctx.fillStyle = '#b8aec8';
+  ctx.font = '500 13px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('▎ AI 替 代 指 数 报 告 ▎', w/2, 44);
+
+  // Ring background
+  const cx = w/2, cy = 165, radius = 70;
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+  ctx.strokeStyle = '#ede4ff';
+  ctx.lineWidth = 9;
+  ctx.stroke();
+
+  // Ring progress
+  ctx.beginPath();
+  const startAngle = -Math.PI / 2;
+  const endAngle = startAngle + (percent / 100) * Math.PI * 2;
+  ctx.arc(cx, cy, radius, startAngle, endAngle);
+  ctx.strokeStyle = r.color;
+  ctx.lineWidth = 9;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Percent text
+  ctx.fillStyle = r.color;
+  ctx.font = 'bold 42px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(`${percent}%`, cx, cy + 12);
+
+  ctx.fillStyle = '#b8aec8';
+  ctx.font = '12px sans-serif';
+  ctx.fillText('被替代概率', cx, cy + 32);
+
+  // Badge
+  ctx.fillStyle = r.color;
+  ctx.font = 'bold 21px sans-serif';
+  ctx.fillText(r.label, cx, 274);
+
+  // Description box
+  ctx.fillStyle = '#b8aec8';
+  ctx.font = '13px sans-serif';
+  ctx.textAlign = 'left';
+  const descLines = wrapText(ctx, r.desc, w - 68);
+  const descStartY = 306;
+  const descH = descLines.length * 20 + 24;
+
+  // desc background
+  ctx.fillStyle = r.bg;
+  ctx.beginPath();
+  roundRect(ctx, 24, descStartY - 16, w - 48, descH, 12);
+  ctx.fill();
+
+  // left accent
+  ctx.fillStyle = r.color;
+  roundedBar(ctx, 24, descStartY - 16, 3, descH, 2);
+
+  // desc text
+  ctx.fillStyle = '#6b6b8a';
+  ctx.font = '13px sans-serif';
+  descLines.forEach((line, i) => {
+    ctx.fillText(line, 38, descStartY + 4 + i * 20);
+  });
+
+  // Share hint
+  const bottomY = descStartY + descH + 28;
+  ctx.fillStyle = '#b8aec8';
+  ctx.font = '12px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('📱 长按截图分享给同事 让他们也焦虑一下', w/2, bottomY);
+
+  // Watermark
+  ctx.fillStyle = '#d0c8e0';
+  ctx.font = '11px sans-serif';
+  ctx.fillText('AI替代我了吗 · ai-replaced.me', w/2, h - 24);
+
+  // Download
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `AI替代指数-${percent}%.png`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('图片已保存，快去分享吧 🚀');
+  }, 'image/png');
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+}
+
+function roundedBar(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  roundRect(ctx, x, y, w, h, r);
+  ctx.fill();
+}
+
+function wrapText(ctx, text, maxWidth) {
+  const lines = [];
+  let line = '';
+  for (let i = 0; i < text.length; i++) {
+    const testLine = line + text[i];
+    if (ctx.measureText(testLine).width > maxWidth) {
+      lines.push(line);
+      line = text[i];
+    } else {
+      line = testLine;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
